@@ -66,7 +66,7 @@ export class User extends Model<User, UserCreationAttrs> {
   points: number;
 
   @BelongsToMany(() => Ad, () => Evaluation)
-  ads: Ad[];
+  evaluatedAds: Ad[];
 
   @BelongsToMany(() => Prize, () => Winner)
   prizes: Prize[];

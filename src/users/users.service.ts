@@ -4,6 +4,7 @@ import { User } from './users.model';
 import { CreateUserDto } from './dto/createUser.dto';
 import { Ad } from '../ads/ads.model';
 import { Evaluation } from '../evaluation/evaluation.model';
+import { AdsService } from '../ads/ads.service';
 
 @Injectable()
 export class UsersService {
@@ -11,6 +12,7 @@ export class UsersService {
     @InjectModel(User) private userModel: typeof User,
     @InjectModel(Ad) private adModel: typeof Ad,
     @InjectModel(Evaluation) private evaluationModel: typeof Evaluation,
+    private adsService: AdsService,
   ) {}
 
   async createUser(dto: CreateUserDto) {
@@ -29,7 +31,7 @@ export class UsersService {
   }
 
   async getEvaluatedAdsByUserId(id: number, mark: string) {
-    const user = await this.userModel.findByPk(id, {
+    const { evaluatedAds } = await this.userModel.findByPk(id, {
       include: {
         model: this.adModel,
         as: 'ads',
@@ -41,7 +43,28 @@ export class UsersService {
       },
       attributes: [],
     });
-    return user;
+    return evaluatedAds;
+  }
+
+  async getNotEvaluatedAdsByUserId(id: number) {
+    const { evaluatedAds } = await this.userModel.findByPk(id, {
+      include: {
+        model: this.adModel,
+        through: {
+          attributes: [],
+        },
+      },
+      attributes: [],
+    });
+    const allAds = await this.adsService.getAllAds();
+
+    const result = allAds.reduce((acc: Ad[], item: Ad) => {
+      if (evaluatedAds.findIndex((i: Ad) => i.id === item.id) === -1)
+        acc.push(item);
+      return acc;
+    }, []);
+
+    return result;
   }
 
   async getUserByPhoneNumber(phoneNumber: string) {

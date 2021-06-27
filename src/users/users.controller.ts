@@ -29,4 +29,9 @@ export class UsersController {
   getFavouriteAds(@Param('id') id: number) {
     return this.usersService.getEvaluatedAdsByUserId(id, 'favourite');
   }
+
+  @Get('/:id/notEvaluatedAds')
+  get(@Param('id') id: number) {
+    return this.usersService.getNotEvaluatedAdsByUserId(id);
+  }
 }
