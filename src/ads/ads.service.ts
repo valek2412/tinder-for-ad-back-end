@@ -20,8 +20,10 @@ export class AdsService {
   }
 
   async deleteAd(id: number) {
-    const ad = await this.AdModel.destroy({ where: { id } });
-    return ad;
+    const ad = await this.AdModel.findByPk(id);
+    await this.fileService.deleteFile(ad.image);
+    await this.AdModel.destroy({ where: { id } });
+    return { msg: 'Successfully deleted' };
   }
 
   async getAllAds() {

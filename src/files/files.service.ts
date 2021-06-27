@@ -21,4 +21,19 @@ export class FilesService {
       );
     }
   }
+
+  async deleteFile(fileName: string) {
+    try {
+      const filePath = path.resolve(__dirname, '..', 'static');
+      if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(filePath, { recursive: true });
+      }
+      fs.unlinkSync(path.join(filePath, fileName));
+    } catch (e) {
+      throw new HttpException(
+        'Произошла ошибка при удалении файла',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
