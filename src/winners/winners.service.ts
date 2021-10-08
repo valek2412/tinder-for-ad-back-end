@@ -14,19 +14,15 @@ export class WinnersService {
   ) {}
 
   async addWinner(dto: AddWinnerDto) {
-    await this.spendPoints(dto);
     const winner = await this.winnerModel.create(dto);
+    await this.spendPoints(dto);
     return winner;
   }
 
   async spendPoints(dto: AddWinnerDto) {
     const cost = await this.prizeService.getPrizeCost(dto.prizeId);
     const points = await this.userService.getUserPoints(dto.userId);
-    if (cost > points)
-      throw new HttpException(
-        'Not enough points',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+    if (cost > points) throw new HttpException('Not enough points', 400);
     await this.userService.addPoints(dto.userId, -cost);
   }
 }

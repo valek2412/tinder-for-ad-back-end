@@ -13,7 +13,11 @@ interface WinnerCreationAttrs {
   prizeId: number;
 }
 
-@Table({ tableName: 'winners', createdAt: false, updatedAt: false })
+@Table({
+  tableName: 'winners',
+  createdAt: false,
+  updatedAt: false,
+})
 export class Winner extends Model<Winner, WinnerCreationAttrs> {
   @Column({
     type: DataType.INTEGER,

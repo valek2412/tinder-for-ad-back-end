@@ -3,7 +3,9 @@ import {
   Column,
   DataType,
   Model,
+  PrimaryKey,
   Table,
+  Unique,
 } from 'sequelize-typescript';
 import { User } from '../users/users.model';
 import { Winner } from '../winners/winners.model';
@@ -15,11 +17,11 @@ interface PrizeCreationAttrs {
 
 @Table({ tableName: 'prizes' })
 export class Prize extends Model<Prize, PrizeCreationAttrs> {
+  @Unique
+  @PrimaryKey
   @Column({
     type: DataType.INTEGER,
-    unique: true,
     autoIncrement: true,
-    primaryKey: true,
   })
   id: number;
 

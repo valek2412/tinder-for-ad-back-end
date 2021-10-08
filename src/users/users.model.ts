@@ -3,7 +3,9 @@ import {
   Column,
   DataType,
   Model,
+  PrimaryKey,
   Table,
+  Unique,
 } from 'sequelize-typescript';
 import { Evaluation } from '../evaluation/evaluation.model';
 import { Ad } from '../ads/ads.model';
@@ -20,11 +22,11 @@ interface UserCreationAttrs {
 
 @Table({ tableName: 'users' })
 export class User extends Model<User, UserCreationAttrs> {
+  @PrimaryKey
+  @Unique
   @Column({
     type: DataType.INTEGER,
-    unique: true,
     autoIncrement: true,
-    primaryKey: true,
   })
   id: number;
 
