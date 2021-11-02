@@ -6,17 +6,6 @@ on:
       - master
 
 jobs:
-  migrate:
-    name: Migrate Database
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: "Install deps"
-        run: yarn install
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
