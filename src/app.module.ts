@@ -40,7 +40,9 @@ import { Winner } from './winners/winners.model';
       database: process.env.POSTGRES_DB,
       models: [User, Ad, Evaluation, Prize, Winner],
       autoLoadModels: true,
-      ssl: true,
+      dialectOptions: {
+        ssl: true,
+      },
     }),
     UsersModule,
     AdsModule,
