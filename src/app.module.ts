@@ -41,7 +41,10 @@ import { Winner } from './winners/winners.model';
       models: [User, Ad, Evaluation, Prize, Winner],
       autoLoadModels: true,
       dialectOptions: {
-        ssl: true,
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
       },
     }),
     UsersModule,
