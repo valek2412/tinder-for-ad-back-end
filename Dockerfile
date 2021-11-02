@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 RUN yarn install
+RUN yarn prebuild
+RUN yarn build
 
-CMD ["yarn", "prebuild"]
-CMD ["yarn", "build"]
 CMD ["yarn", "start:prod"]
