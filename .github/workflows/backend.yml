@@ -4,20 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'server/**'
-
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  SENDGRID_API_KEY: "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"
-  SENDGRID_EMAIL: "bancrotdoc@gmail.com"
-  TWILIO_ACCOUNT_SID: "AC303b5fbd90d92a1af8c465b2ebfba632"
-  TWILIO_AUTH_TOKEN: "8da04f9736e93821e060baddd1b5cb0d"
-  TWILIO_PHONE_NUMBER: "+18317773617"
-  CLIENT_URL: "http://localhost:3000"
-  YOOKASSA_SHOP_ID: ${{ secrets.YOOKASSA_SHOP_ID }}
-  YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
-
 
 jobs:
   migrate:
@@ -29,10 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: "Install deps"
-        run: cd server && yarn install
-
-      - name: "Migrate"
-        run: cd server && yarn prisma migrate deploy
+        run: yarn install
 
   deploy:
     name: Deploy
@@ -47,4 +30,4 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_directory: ./server
+          dockerfile_directory: .
