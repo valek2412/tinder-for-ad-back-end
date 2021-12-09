@@ -3,16 +3,19 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Prize } from './prizes.model';
 import { CreatePrizeDto } from './dto/createPrize.dto';
 import { User } from '../users/users.model';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export class PrizesService {
   constructor(
+    private fileService: FilesService,
     @InjectModel(Prize) private prizeModel: typeof Prize,
     @InjectModel(User) private userModel: typeof User,
   ) {}
 
-  async createPrize(dto: CreatePrizeDto) {
-    const prize = await this.prizeModel.create(dto);
+  async createPrize(dto: CreatePrizeDto, image: any) {
+    const fileName = await this.fileService.createFile(image);
+    const prize = await this.prizeModel.create({ ...dto, image: fileName });
     return prize;
   }
 

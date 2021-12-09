@@ -13,6 +13,7 @@ import { Winner } from '../winners/winners.model';
 interface PrizeCreationAttrs {
   title: string;
   cost: number;
+  image: string;
 }
 
 @Table({ tableName: 'prizes' })
@@ -30,6 +31,12 @@ export class Prize extends Model<Prize, PrizeCreationAttrs> {
     allowNull: false,
   })
   title: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: true,
+  })
+  image: string;
 
   @Column({
     type: DataType.INTEGER,
