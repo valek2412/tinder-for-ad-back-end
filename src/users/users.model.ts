@@ -50,6 +50,12 @@ export class User extends Model<User, UserCreationAttrs> {
   surname: string;
 
   @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  patronymic: string;
+
+  @Column({
     type: DataType.DATEONLY,
     allowNull: false,
   })
